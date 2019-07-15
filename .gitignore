@@ -1,0 +1,4 @@
+.idea/
+.git/
+cmake-build-debug/
+get_depth_frames/build/
