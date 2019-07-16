@@ -70,8 +70,8 @@ void run() {
             last_frame.saveImageAsPointCloudMesh("Test.ply");
             const float *test {last_frame.depthInMillimeters()};
             int total_elements {last_frame.height() * last_frame.width()};
-            for (i=0;i<total_elements;i++){
-                std::cout << i << " = "<< sizeof(test[i]) << std::endl;
+            for (int i=0;i<total_elements;i++){
+                std::cout << i << " = "<< test[i] << std::endl;
             }
             exit(0);
         }
