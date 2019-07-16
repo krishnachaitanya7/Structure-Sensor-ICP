@@ -1,0 +1,2 @@
+add_executable(test_feature new_feature_test/test_feature.cpp)
+target_link_libraries(test_feature)
