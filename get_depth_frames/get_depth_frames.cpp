@@ -6,7 +6,6 @@
 #include <ST/CaptureSession.h>
 #include <queue>
 #include <iostream>
-#define CTRL_KEYPRESS(k) ((k)  & 0x1f)
 
 // Global Variable Declaration
 std::queue <ST::DepthFrame> dp_frames;
