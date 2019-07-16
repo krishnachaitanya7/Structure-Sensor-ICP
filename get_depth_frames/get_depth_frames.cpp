@@ -23,8 +23,7 @@ struct SessionDelegate : ST::CaptureSessionDelegate {
             case ST::CaptureSessionEventId::Error:
                 printf("Capture session error\n");
                 exit(1);
-            default:
-                printf("Capture session event unhandled\n");
+
         }
     }
 
