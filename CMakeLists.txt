@@ -1,11 +1,20 @@
-cmake_minimum_required(VERSION 3.1.0)
-#project(cloud_viewer)
-#find_package(PCL REQUIRED)
-#include_directories(${PCL_INCLUDE_DIRS})
-#link_directories(${PCL_LIBRARY_DIRS})
-#add_definitions(${PCL_DEFINITIONS})
-#add_executable (cloud_viewer show_ply.cpp)
-#add_executable (test_icp ICP_test.cpp)
-#target_link_libraries (cloud_viewer ${PCL_LIBRARIES})
-#target_link_libraries (test_icp ${PCL_LIBRARIES})
-#include_directories(get_depth_frames)
+cmake_minimum_required(VERSION 3.14)
+project(Structure_Sensor_ICP)
+
+set(CMAKE_CXX_STANDARD 14)
+#add_executable(Structure_Sensor_ICP
+#    depth_to_pcl/depth_to_pcl.cpp
+#    get_depth_frames/get_depth_frames/get_depth_frames.cpp
+#    get_depth_frames/get_depth_frames.cpp
+#    ICP_test.cpp
+#    main.cpp
+#    show_ply.cpp)
+# Below is the 3-4 lines you have to comment out when you want to have run other damn executables
+# Fuck Me Please CMake
+find_package(PCL REQUIRED)
+add_executable(GetDepthFrames get_depth_frames/get_depth_frames.cpp)
+#target_link_libraries(GetDepthFrames Structure)
+target_link_libraries(GetDepthFrames ${PCL_LIBRARIES} Structure)
+#ICP Test
+#add_executable(icp_test ICP_test.cpp)
+#target_link_libraries(icp_test ${PCL_LIBRARIES})

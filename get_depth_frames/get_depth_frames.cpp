@@ -2,7 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <thread>
+#include <array>
 #include <ST/CaptureSession.h>
+#include <queue>
+#include <iostream>
+#define CTRL_KEYPRESS(k) ((k)  & 0x1f)
+
+// Global Variable Declaration
+std::queue <ST::DepthFrame> dp_frames;
 
 struct SessionDelegate : ST::CaptureSessionDelegate {
     void captureSessionEventDidOccur(ST::CaptureSession *session, ST::CaptureSessionEventId event) override {
@@ -17,29 +24,23 @@ struct SessionDelegate : ST::CaptureSessionDelegate {
             case ST::CaptureSessionEventId::Error:
                 printf("Capture session error\n");
                 exit(1);
-                break;
             default:
                 printf("Capture session event unhandled\n");
         }
     }
 
     void captureSessionDidOutputSample(ST::CaptureSession *, const ST::CaptureSessionSample& sample) override {
-        char ply_save_path {'t'};
         switch (sample.type) {
-            case ST::CaptureSessionSample::Type::DepthFrame:
-                printf("Depth frame: size %dx%d\n", sample.depthFrame.width(), sample.depthFrame.height());
-                break;
             case ST::CaptureSessionSample::Type::SynchronizedFrames:
-                printf("Synchronized frame: size %dx%d\n", sample.depthFrame.width(), sample.depthFrame.height());
-                sample.depthFrame.saveImageToPngFile(&ply_save_path);
-                exit(0);
-            default:
-                printf("Is printf working?");
+                dp_frames.push(sample.depthFrame);
+//                std::cout << "TimeStamp is:" << sample.depthFrame.timestamp() << std::endl;
                 break;
 
         }
     }
 };
+
+
 
 void run() {
     ST::CaptureSessionSettings settings;
@@ -50,7 +51,9 @@ void run() {
     settings.structureCore.infraredEnabled = true;
     settings.structureCore.accelerometerEnabled = false;
     settings.structureCore.gyroscopeEnabled = false;
-//    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::VGA;
+    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::VGA;
+    settings.structureCore.depthRangeMode = ST::StructureCoreDepthRangeMode::VeryShort;
+
     SessionDelegate delegate;
     ST::CaptureSession session;
     session.setDelegate(&delegate);
@@ -61,12 +64,25 @@ void run() {
 
     /* Loop forever. The SessionDelegate receives samples on a background thread
        while streaming. */
+    int count {0};
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        if (count == 5){
+            ST::DepthFrame last_frame = dp_frames.back();
+            last_frame.saveImageAsPointCloudMesh("Test.ply");
+            const float *test {last_frame.depthInMillimeters()};
+            std::cout << sizeof(test) << "x" << sizeof(test[0]) << std::endl;
+//            std::cout << "TimeStamp is:" << last_frame.timestamp() << std::endl;
+
+            exit(0);
+        }
+        count++;
+
+
     }
 }
 
-int main(void) {
+int main() {
     run();
     return 0;
 }

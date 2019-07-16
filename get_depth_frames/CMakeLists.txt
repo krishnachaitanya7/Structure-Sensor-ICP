@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.1.0)
 find_package(PCL REQUIRED)
 add_executable(GetDepthFrames get_depth_frames.cpp)
 #target_link_libraries(GetDepthFrames Structure)
