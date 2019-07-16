@@ -69,9 +69,10 @@ void run() {
             ST::DepthFrame last_frame = dp_frames.back();
             last_frame.saveImageAsPointCloudMesh("Test.ply");
             const float *test {last_frame.depthInMillimeters()};
-            std::cout << sizeof(test) << "x" << sizeof(test[0]) << std::endl;
-//            std::cout << "TimeStamp is:" << last_frame.timestamp() << std::endl;
-
+            int total_elements {last_frame.height() * last_frame.width()};
+            for (i=0;i<total_elements;i++){
+                std::cout << i << " = "<< sizeof(test[i]) << std::endl;
+            }
             exit(0);
         }
         count++;
