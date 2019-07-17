@@ -70,7 +70,7 @@ void run() {
        while streaming. */
     int count {0};
     while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         if (count <= 5){
             if (count == 5) {
                 ST::DepthFrame reference_frame = dp_frames;
