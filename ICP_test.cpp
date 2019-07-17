@@ -6,8 +6,8 @@
 #include <pcl/visualization/cloud_viewer.h>
 
 int main(){
-    std::string kkc_ply = "/home/shine/CLionProjects/Structure-Sensor-ICP/ply_files/kkc_face_metres.ply";
-    std::string tea_ply = "/home/shine/CLionProjects/Structure-Sensor-ICP/ply_files/Test.ply";
+    std::string kkc_ply = "/home/shine/CLionProjects/Structure-Sensor-ICP/cmake-build-debug/Ref1.ply";
+    std::string tea_ply = "/home/shine/CLionProjects/Structure-Sensor-ICP/cmake-build-debug/Ref.ply";
     pcl::PointCloud<pcl::PointXYZ>::Ptr tea_cloud (new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PointCloud<pcl::PointXYZ>::Ptr test_tea_cloud (new pcl::PointCloud<pcl::PointXYZ>);
     pcl::PLYReader Reader;
