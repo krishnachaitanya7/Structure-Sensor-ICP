@@ -55,7 +55,7 @@ void run() {
     settings.structureCore.infraredEnabled = true;
     settings.structureCore.accelerometerEnabled = false;
     settings.structureCore.gyroscopeEnabled = false;
-    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::VGA;
+    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::_320x240;
     settings.structureCore.depthRangeMode = ST::StructureCoreDepthRangeMode::VeryShort;
 
     SessionDelegate delegate;
