@@ -55,7 +55,7 @@ void run() {
     settings.structureCore.infraredEnabled = true;
     settings.structureCore.accelerometerEnabled = false;
     settings.structureCore.gyroscopeEnabled = false;
-    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::_320x240;
+    settings.structureCore.depthResolution = ST::StructureCoreDepthResolution::_640x480;
     settings.structureCore.depthRangeMode = ST::StructureCoreDepthRangeMode::VeryShort;
 
     SessionDelegate delegate;
@@ -91,6 +91,8 @@ void run() {
             Reader.read(kkc_ply, *tea_cloud);
             Reader.read(tea_ply, *test_tea_cloud);
             pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
+            icp.setTransformationEpsilon(1e-6);
+            icp.setMaximumIterations(10);
             icp.setInputSource(tea_cloud);
             icp.setInputTarget(test_tea_cloud);
             pcl::PointCloud<pcl::PointXYZ> Final;
